@@ -1,6 +1,5 @@
 "use client";
 import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
-import { useState } from "react";
 import Image from "next/image";
 
 const fadeInUp = {
@@ -41,11 +40,9 @@ const timeline = [
 ];
 
 export default function Portfolio() {
-
   // 🔥 Smooth Mouse Glow Setup
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   const smoothX = useSpring(mouseX, { stiffness: 120, damping: 25 });
   const smoothY = useSpring(mouseY, { stiffness: 120, damping: 25 });
 
@@ -65,13 +62,15 @@ export default function Portfolio() {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-cyan-500/30 overflow-x-hidden"
+      className="relative min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 overflow-x-hidden"
     >
 
       {/* 🔥 Animated Mouse Glow Background */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-0"
-        style={{ background }}
+        style={{ 
+          backgroundImage: `linear-gradient(#020617, #020617), ${background}`
+        }}
       />
 
       {/* CONTENT WRAPPER */}
@@ -134,13 +133,38 @@ export default function Portfolio() {
                 src="https://sjmmajuresources.com/wp-content/uploads/elementor/thumbs/41x47-q504iwyzwymp49j0xvviksey93v4rqtm96tp4lqoio.png"
                 alt="Muhammad Safie"
                 fill
-                className="rounded-lg relative bg-[#020617] border border-slate-800 shadow-2xl brightness-90 grayscale-[0.2] object-cover"
+                className="rounded-lg relative border border-slate-800 shadow-2xl brightness-90 grayscale-[0.2] object-cover"
                 priority
               />
             </div>
           </motion.div>
         </section>
 
+        {/* 3. EXPERIENCE TIMELINE */}
+        <section className="max-w-6xl mx-auto px-6 py-20 md:py-32 bg-slate-950/50 border-y border-slate-900">
+          <h3 className="text-3xl md:text-4xl font-black text-white mb-12 md:mb-16 flex items-center gap-4 md:gap-6 tracking-tighter">
+            CAREER <span className="text-cyan-500">ROADMAP</span>
+          </h3>
+          <div className="space-y-0">
+            {timeline.map((item, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="group relative flex flex-col md:grid md:grid-cols-4 gap-4 md:gap-8 py-8 md:py-12 border-l-2 border-slate-800 pl-6 md:pl-10 transition-colors"
+              >
+                <div className="absolute w-3 h-3 md:w-4 md:h-4 bg-slate-900 border-2 border-cyan-500 rounded-full -left-[7px] md:-left-[9px] top-10 md:top-14 group-hover:bg-cyan-500 transition-colors" />
+                <div className="text-xs md:text-sm font-mono text-cyan-500">{item.year}</div>
+                <div className="md:col-span-2">
+                  <h4 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">{item.role}</h4>
+                  <p className="text-xs md:text-sm text-slate-500 font-semibold mb-2 tracking-wide uppercase">{item.org}</p>
+                  <p className="text-sm md:text-base text-slate-400 leading-relaxed max-w-xl">{item.detail}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
