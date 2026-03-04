@@ -47,42 +47,9 @@ const timeline = [
   }
 ];
 
-export default function GearBackground() {
-  return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#020617] flex items-center justify-center">
-      
-      {/* --- THE ROTATING GEARS --- */}
-      <motion.div
-        className="absolute z-0 opacity-20 pointer-events-none"
-        animate={{ rotate: 360 }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 20, 
-          ease: "linear" 
-        }}
-        style={{ width: '600px', height: '600px' }}
-      >
-        <Image 
-          src="/gears.png" 
-          alt="Rotating Gears" 
-          fill
-          className="object-contain"
-        />
-      </motion.div>
-
-      {/* --- CONTENT ON TOP --- */}
-      <div className="relative z-10 text-center text-white">
-        <h1 className="text-6xl font-black">Solution Management Expert</h1>
-      </div>
-
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   const xVelocity = useVelocity(mouseX);
   const yVelocity = useVelocity(mouseY);
   
@@ -91,10 +58,8 @@ export default function Portfolio() {
     { stiffness: 50, damping: 20 }
   );
 
-  // 🔥 SMALLER RADIUS: 250px when still, max 450px when moving
+  // DENSE GLOW SETTINGS
   const glowSize = useTransform(mouseSpeed, [0, 1000], ["250px", "450px"]);
-  
-  // 🔥 MORE SATURATED COLORS: Higher alpha (0.4 to 0.6) for a "dense" look
   const glowColor = useTransform(
     mouseSpeed,
     [0, 1000],
@@ -104,7 +69,6 @@ export default function Portfolio() {
   const smoothX = useSpring(mouseX, { stiffness: 150, damping: 30 });
   const smoothY = useSpring(mouseY, { stiffness: 150, damping: 30 });
 
-  // 🔥 TIGHTER GRADIENT: transparent at 40% makes the center feel solid/dense
   const backgroundGlow = useMotionTemplate`
     radial-gradient(
       ${glowSize} circle at ${smoothX}px ${smoothY}px,
@@ -125,7 +89,17 @@ export default function Portfolio() {
   return (
     <div className="relative min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-cyan-500/30 overflow-x-hidden">
       
-      {/* Glow Layer */}
+      {/* 1. BACKGROUND GEARS (Subtle & Constant) */}
+      <motion.div
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-[0.03] pointer-events-none"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+        style={{ width: '800px', height: '800px' }}
+      >
+        <Image src="/gears.png" alt="Industrial Gears" fill className="object-contain" />
+      </motion.div>
+
+      {/* 2. DENSE GLOW LAYER */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-0 opacity-80"
         style={{ background: backgroundGlow }}
@@ -162,13 +136,13 @@ export default function Portfolio() {
               Electronic Engineer & AI Researcher
             </motion.p>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto md:mx-0">
-              Synthesizing <strong className="text-white font-bold">sensor arrays</strong> and <strong className="text-white font-bold">machine intelligence</strong> for IR4.0 at the Malaysian Rubber Board.
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto md:mx-0 text-pretty">
+              Synthesizing <strong className="text-white font-bold tracking-normal">sensor arrays</strong> and <strong className="text-white font-bold tracking-normal">machine intelligence</strong> for IR4.0 at the Malaysian Rubber Board.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center md:justify-start gap-2 mb-10">
               {["ROS", "TensorFlow", "IoT", "PCB Design", "Python", "STM32", "ESP32", "C++"].map((skill) => (
-                <span key={skill} className="px-3 py-2 bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-md font-mono text-[10px] md:text-xs text-slate-400 hover:text-cyan-400 transition-colors">
+                <span key={skill} className="px-3 py-2 bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-md font-mono text-[10px] md:text-xs text-slate-400 hover:text-cyan-400 transition-colors cursor-default">
                   {skill}
                 </span>
               ))}
@@ -184,7 +158,7 @@ export default function Portfolio() {
             </motion.div>
           </motion.div>
 
-          {/* IMAGE */}
+          {/* PROFILE IMAGE */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
@@ -192,7 +166,6 @@ export default function Portfolio() {
             className="relative group order-1 md:order-2 flex justify-center"
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-
             <div className="w-[280px] h-[280px] md:w-[450px] md:h-[450px] relative">
               <Image 
                 src="https://sjmmajuresources.com/wp-content/uploads/elementor/thumbs/41x47-q504iwyzwymp49j0xvviksey93v4rqtm96tp4lqoio.png"
@@ -215,7 +188,7 @@ export default function Portfolio() {
           </motion.div>
         </section>
 
-        {/* 3. EXPERIENCE TIMELINE */}
+        {/* ROADMAP SECTION */}
         <section className="max-w-6xl mx-auto px-6 py-20 md:py-32 bg-slate-950/40 backdrop-blur-sm border-y border-slate-900">
           <h3 className="text-3xl md:text-4xl font-black text-white mb-12 md:mb-16 flex items-center gap-4 md:gap-6 tracking-tighter uppercase">
             Career <span className="text-cyan-500 tracking-tighter">Roadmap</span>
@@ -241,7 +214,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* 4. TECHNICAL MILESTONES */}
+        {/* TECHNICAL MILESTONES */}
         <section className="max-w-6xl mx-auto px-6 py-20 md:py-32">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-slate-800">
             {[
