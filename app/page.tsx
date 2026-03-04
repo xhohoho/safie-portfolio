@@ -47,38 +47,6 @@ const timeline = [
   }
 ];
 
-export default function GearBackground() {
-  return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#020617] flex items-center justify-center">
-      
-      {/* --- THE ROTATING GEARS --- */}
-      <motion.div
-        className="absolute z-0 opacity-20 pointer-events-none"
-        animate={{ rotate: 360 }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 20, 
-          ease: "linear" 
-        }}
-        style={{ width: '600px', height: '600px' }}
-      >
-        <Image 
-          src="/gears.png" 
-          alt="Rotating Gears" 
-          fill
-          className="object-contain"
-        />
-      </motion.div>
-
-      {/* --- CONTENT ON TOP --- */}
-      <div className="relative z-10 text-center text-white">
-        <h1 className="text-6xl font-black">Solution Management Expert</h1>
-      </div>
-
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
