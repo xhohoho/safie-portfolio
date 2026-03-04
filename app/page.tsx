@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Animation Variants for re-use
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
@@ -13,7 +12,6 @@ const staggerContainer = {
   animate: { transition: { staggerChildren: 0.1 } }
 };
 
-// SORTED: Latest Career at the Top
 const timeline = [
   { 
     year: "Current Mission", 
@@ -58,7 +56,6 @@ export default function Portfolio() {
           <span>IoT_Gateway: Connected</span>
           <span>Location: Malaysia</span>
           <span>AI_Core: Online</span>
-          {/* Duplicates for seamless loop */}
           <span>System_State: Operational</span>
           <span>Neural_Network: Active</span>
           <span>IR4.0_Protocol: Enabled</span>
@@ -88,10 +85,11 @@ export default function Portfolio() {
           </motion.div>
 
           <motion.div variants={fadeInUp} className="flex items-center gap-6">
-            <a href="mailto:muhd.safie1996@gmail.com" className="px-8 py-4 bg-cyan-600 text-white font-bold rounded shadow-lg shadow-cyan-900/20 hover:bg-cyan-500 hover:-translate-y-1 transition-all uppercase text-sm tracking-widest">
+            <a href="mailto:muhd.safie1996@gmail.com" className="px-8 py-4 bg-cyan-600 text-white font-bold rounded shadow-lg shadow-cyan-900/20 hover:bg-cyan-500 hover:-translate-y-1 transition-all uppercase text-sm tracking-widest text-center">
               Contact Me
             </a>
-            <a href="/Muhammad_Safie_Resume.pdf" download className="px-8 py-4 border border-slate-700 text-slate-300 font-bold rounded hover:bg-slate-800 hover:border-slate-500 transition-all uppercase text-sm tracking-widest">
+            {/* UPDATED DOWNLOAD PATH */}
+            <a href="/Muhammad_Safie_Resume.pdf" download className="px-8 py-4 border border-slate-700 text-slate-300 font-bold rounded hover:bg-slate-800 hover:border-slate-500 transition-all uppercase text-sm tracking-widest text-center">
               Download CV
             </a>
           </motion.div>
@@ -113,7 +111,6 @@ export default function Portfolio() {
             priority
           />
           
-          {/* RESEARCH STATUS OVERLAY */}
           <div className="absolute -bottom-6 -right-6 bg-slate-900 p-5 border border-slate-700 shadow-2xl z-20">
             <div className="flex items-center gap-3 mb-2">
               <span className="relative flex h-3 w-3">
@@ -127,7 +124,7 @@ export default function Portfolio() {
         </motion.div>
       </section>
 
-      {/* 3. EXPERIENCE TIMELINE - Sorted Recent to Old */}
+      {/* 3. EXPERIENCE TIMELINE */}
       <section className="max-w-6xl mx-auto px-6 py-32 bg-slate-950/50 border-y border-slate-900">
         <h3 className="text-4xl font-black text-white mb-16 flex items-center gap-6 tracking-tighter">
           CAREER <span className="text-cyan-500">ROADMAP</span>
@@ -159,17 +156,17 @@ export default function Portfolio() {
           {[
             { 
               title: "SiswaSAT 2020", 
-              desc: "Awarded 3rd Place as Mission Manager. Engineered sensor-array interfacing using Arduino Master/Slave architecture and long-range NRF24L01 telemetry. [cite: 40, 42, 43]", 
+              desc: "Awarded 3rd Place as Mission Manager. Engineered sensor-array interfacing using Arduino Master/Slave architecture and long-range NRF24L01 telemetry.", 
               icon: "📡" 
             },
             { 
               title: "JVCKENWOOD", 
-              desc: "Directing Pre-Preparation to Mass Production stages. Specialized in line-balancing, productivity improvement, and firmware validation. [cite: 57, 58, 60, 64]", 
+              desc: "Directing Pre-Preparation to Mass Production stages. Specialized in line-balancing, productivity improvement, and firmware validation.", 
               icon: "🏭" 
             },
             { 
               title: "Autonomous ROS", 
-              desc: "Conducted deep-dive performance analysis on Adaptive Monte Carlo Localization (AMCL) within the Robot Operating System (ROS) framework. [cite: 26, 29, 30]", 
+              desc: "Conducted deep-dive performance analysis on Adaptive Monte Carlo Localization (AMCL) within the Robot Operating System (ROS) framework.", 
               icon: "🤖" 
             }
           ].map((m, i) => (
