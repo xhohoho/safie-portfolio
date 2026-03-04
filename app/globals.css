@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020617; /* Set to your dark portfolio blue */
+  --foreground: #f8fafc;
 }
 
 @theme inline {
@@ -12,15 +12,30 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Custom Portfolio Layers */
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    @apply antialiased overflow-x-hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 25s Technical Ticker Animation */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@layer utilities {
+  .animate-ticker {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 25s linear infinite;
+  }
+
+  .mouse-glow-layer {
+    @apply pointer-events-none fixed inset-0 z-0 opacity-60;
+    transition: background 0.2s ease-out;
+  }
 }
