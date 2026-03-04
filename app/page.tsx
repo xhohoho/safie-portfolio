@@ -158,7 +158,7 @@ export default function Portfolio() {
           {[
             { 
               title: "SiswaSAT 2020", 
-              desc: "Awarded 3rd Place as Mission Manager. Engineered sensor-array interfacing using Arduino Master/Slave architecture and long-range NRF24L01 telemetry.", 
+              desc: "Awarded 3rd Place as Mission Manager. Engineered a mini satellite size of a can featuring sensor-array interfacing using Arduino Master/Slave architecture and long-range NRF24L01 telemetry.", 
               icon: "📡" 
             },
             { 
