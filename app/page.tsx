@@ -8,7 +8,7 @@ import {
   useTransform 
 } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -48,40 +48,36 @@ const timeline = [
 ];
 
 export default function Portfolio() {
-  // 1. Mouse Position Values
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // 2. Calculate Velocity (Speed)
   const xVelocity = useVelocity(mouseX);
   const yVelocity = useVelocity(mouseY);
   
-  // Combine X and Y velocity into a single speed value
   const mouseSpeed = useSpring(
     useTransform(() => Math.abs(xVelocity.get()) + Math.abs(yVelocity.get())),
     { stiffness: 50, damping: 20 }
   );
 
-  // 3. Map Speed to Visual Properties
-  // Smaller (300px) when still, larger (600px) when moving fast
-  const glowSize = useTransform(mouseSpeed, [0, 1000], ["350px", "650px"]);
+  // 🔥 SMALLER RADIUS: 250px when still, max 450px when moving
+  const glowSize = useTransform(mouseSpeed, [0, 1000], ["250px", "450px"]);
   
-  // Change color based on speed (Cyan to Purple/Blue shift)
+  // 🔥 MORE SATURATED COLORS: Higher alpha (0.4 to 0.6) for a "dense" look
   const glowColor = useTransform(
     mouseSpeed,
     [0, 1000],
-    ["rgba(6, 182, 212, 0.25)", "rgba(139, 92, 246, 0.4)"]
+    ["rgba(6, 182, 212, 0.4)", "rgba(139, 92, 246, 0.6)"]
   );
 
-  // 4. Smooth out the movement
   const smoothX = useSpring(mouseX, { stiffness: 150, damping: 30 });
   const smoothY = useSpring(mouseY, { stiffness: 150, damping: 30 });
 
+  // 🔥 TIGHTER GRADIENT: transparent at 40% makes the center feel solid/dense
   const backgroundGlow = useMotionTemplate`
     radial-gradient(
       ${glowSize} circle at ${smoothX}px ${smoothY}px,
       ${glowColor},
-      transparent 70%
+      transparent 40%
     )
   `;
 
@@ -97,9 +93,9 @@ export default function Portfolio() {
   return (
     <div className="relative min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-cyan-500/30 overflow-x-hidden">
       
-      {/* Dynamic Velocity Glow Layer */}
+      {/* Glow Layer */}
       <motion.div
-        className="pointer-events-none fixed inset-0 z-0 opacity-60"
+        className="pointer-events-none fixed inset-0 z-0 opacity-80"
         style={{ background: backgroundGlow }}
       />
 
@@ -130,27 +126,27 @@ export default function Portfolio() {
 
             <motion.div variants={fadeInUp} className="h-1 w-20 bg-cyan-500 mb-6 mx-auto md:mx-0" />
 
-            <motion.p variants={fadeInUp} className="text-base md:text-lg font-mono text-cyan-400 mb-8 tracking-[0.15em] uppercase italic text-pretty">
+            <motion.p variants={fadeInUp} className="text-base md:text-lg font-mono text-cyan-400 mb-8 tracking-[0.15em] uppercase italic">
               Electronic Engineer & AI Researcher
             </motion.p>
 
-            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto md:mx-0 text-pretty">
-              Synthesizing <strong className="text-white font-bold tracking-normal">sensor arrays</strong> and <strong className="text-white font-bold tracking-normal">machine intelligence</strong> for IR4.0 at the Malaysian Rubber Board.
+            <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto md:mx-0">
+              Synthesizing <strong className="text-white font-bold">sensor arrays</strong> and <strong className="text-white font-bold">machine intelligence</strong> for IR4.0 at the Malaysian Rubber Board.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center md:justify-start gap-2 mb-10">
               {["ROS", "TensorFlow", "IoT", "PCB Design", "Python", "STM32", "ESP32", "C++"].map((skill) => (
-                <span key={skill} className="px-3 py-2 bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-md font-mono text-[10px] md:text-xs text-slate-400 hover:text-cyan-400 transition-colors">
+                <span key={skill} className="px-3 py-2 bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-md font-mono text-[10px] md:text-xs text-slate-400 hover:text-cyan-400 transition-colors">
                   {skill}
                 </span>
               ))}
             </motion.div>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
-              <a href="mailto:muhd.safie1996@gmail.com" className="w-full sm:w-auto px-8 py-4 bg-cyan-600 text-white font-bold rounded shadow-lg shadow-cyan-900/20 hover:bg-cyan-500 transition-all uppercase text-sm tracking-widest">
+              <a href="mailto:muhd.safie1996@gmail.com" className="w-full sm:w-auto px-8 py-4 bg-cyan-600 text-white font-bold rounded shadow-lg shadow-cyan-900/20 hover:bg-cyan-500 transition-all uppercase text-sm tracking-widest text-center">
                 Contact Me
               </a>
-              <a href="/Muhammad_Safie_Resume.pdf" download className="w-full sm:w-auto px-8 py-4 border border-slate-700 text-slate-300 font-bold rounded hover:bg-slate-800 transition-all uppercase text-sm tracking-widest">
+              <a href="/Muhammad_Safie_Resume.pdf" download className="w-full sm:w-auto px-8 py-4 border border-slate-700 text-slate-300 font-bold rounded hover:bg-slate-800 transition-all uppercase text-sm tracking-widest text-center">
                 Download CV
               </a>
             </motion.div>
